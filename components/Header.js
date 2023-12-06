@@ -32,7 +32,7 @@ export default function Header() {
         <StyledHeader>
             <Center>
                 <Wrapper>
-                    <Logo href={'/'}>Aeon store</Logo>
+                    <Logo href={'/'}>Aeon stores</Logo>
                     <StyledNav>
                         <NavLink href={'/'}>Home</NavLink>
                         <NavLink href={'/products'}>All products</NavLink>
