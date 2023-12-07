@@ -11,12 +11,12 @@ export default async function handler(req, res) {
     }
     const {
         name, email, city, pincode,
-        streetAddress, state, products
+        streetAddress, state, cartProducts
     } = req.body
 
     await mongooseConnect()
 
-    const productsIds = products.split(',');
+    const productsIds = cartProducts;
     const uniqueIds = [...new Set(productsIds)]
     const productInfos = await Product.find({ _id: uniqueIds }).exec();
 
