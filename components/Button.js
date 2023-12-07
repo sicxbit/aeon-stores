@@ -20,43 +20,54 @@ export const ButtonStyle = css`
     padding-bottom: px;
   }
   ${props =>
-        props.white &&
-        !props.outline &&
-        css`
+    props.white &&
+    css`
       background-color: white;
       color: #000;
     `}
   ${props =>
-        props.white &&
-        props.outline &&
-        css`
+    props.white &&
+    props.outline &&
+    css`
       background-color: transparent;
       color: #fff;
       border: 1px solid white;
     `}
   ${props =>
-        props.primary &&
-        css`
+    props.primary &&
+    css`
       background-color: ${primary};
       color: #fff;
       border: 1px solid ${primary};
     `}
     ${props =>
-        props.primary &&
-        props.outline&&
-        css`
+    props.primary &&
+    props.outline &&
+    css`
       background-color: transparent;
       color: ${primary};
       border: 1px solid ${primary};
     `}
+    ${props =>
+    props.block &&
+    css`
+      display: block;
+      width: 100%;
+    `}
   ${props =>
-        props.size === "l" &&
-        css`
+    props.size === "l" &&
+    css`
       text-size: 1.2rem;
       padding: 10px 20px;
       svg {
         height: 20px;
       }
+    `}
+    ${props =>
+    props.black &&
+    css`
+      background-color: black;
+      color: #fff;
     `}
 `;
 
@@ -65,9 +76,9 @@ const StyledButton = styled.button`
 `;
 
 export default function Button({ children, ...rest }) {
-    return (
-        <StyledButton {...rest}>
-            {children}
-        </StyledButton>
-    );
+  return (
+    <StyledButton {...rest}>
+      {children}
+    </StyledButton>
+  );
 }
