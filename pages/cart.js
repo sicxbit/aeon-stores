@@ -190,6 +190,10 @@ export default function CartPage() {
                                     name="state"
                                     onChange={
                                         ev => setState(ev.target.value)} />
+                                <input
+                                    type="hidden"
+                                    name="products"
+                                    value={cartProducts.join(',')} />
                                 <Button
                                     size={"l"}
                                     black block

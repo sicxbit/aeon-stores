@@ -2,7 +2,7 @@ import { primary } from "@/pages/lib/colors";
 import styled, { css } from "styled-components";
 
 export const ButtonStyle = css`
-  background-color: gray;
+  background-color: #CCCCCC;
   border: 0;
   color: black;
   padding: 5px 15px;
