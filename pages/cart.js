@@ -6,6 +6,8 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import Table from "@/components/table";
+import Input from "@/components/Input";
+
 
 const ColumnsWrapper = styled.div`
   display: grid;
@@ -40,10 +42,24 @@ const ProductImageBox = styled.div`
     }
 `;
 
+const QuantityLabel = styled.span`
+    padding: 0 3px;
+`;
+
+const CityHolder = styled.div`
+    display: flex;
+    gap: 5px;
+`
+
 export default function CartPage() {
-    const { cartProducts } = useContext(CartContext);
+    const { cartProducts, addProduct, removeProduct } = useContext(CartContext);
     const [products, setProducts] = useState([])
-    console.log(cartProducts);
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [city, setCity] = useState('')
+    const [pincode, setPincode] = useState('')
+    const [streetAddress, setStreetAddress] = useState('')
+    const [state, setState] = useState('')
     useEffect(() => {
         const fetchProducts = async () => {
             if (cartProducts.length > 0) {
@@ -58,6 +74,19 @@ export default function CartPage() {
 
         fetchProducts();
     }, [cartProducts]);
+
+    function moreOfThisProduct(id) {
+        addProduct(id)
+    }
+    function lessOfThisProduct(id) {
+        removeProduct(id)
+    }
+
+    let total = 0
+    for (const productId of cartProducts) {
+        const price = products.find(p => p._id === productId)?.price || 0;
+        total += price
+    }
 
     return (
         <>
@@ -86,11 +115,30 @@ export default function CartPage() {
                                                 </ProductImageBox>
                                                 {product.title}
                                             </ProductInfoCell>
-                                            <td>{cartProducts.filter(id => id === product._id).length}</td>
-                                            <td>{cartProducts.filter(id => id === product._id).length
-                                            * product.price}</td>
+                                            <td>
+                                                <Button onClick={() => lessOfThisProduct(product._id)}>
+                                                    -
+                                                </Button>
+                                                <QuantityLabel>
+                                                    {cartProducts.filter(id => id === product._id).length}
+                                                </QuantityLabel>
+                                                <Button onClick={() => moreOfThisProduct(product._id)}>
+                                                    +
+                                                </Button>
+                                            </td>
+                                            <td>
+                                                {cartProducts.filter(id => id === product._id).length
+                                                    * product.price}
+                                            </td>
                                         </tr>
                                     ))}
+                                    <tr>
+                                        <td>
+                                        </td>
+                                        <td></td>
+                                        <td>₹{total}</td>
+                                    </tr>
+
                                 </tbody>
                             </Table>
                         )}
@@ -98,11 +146,58 @@ export default function CartPage() {
                     {cartProducts.length > 0 && (
                         <Box>
                             <h2>Order information</h2>
-                            <input type="text" placeholder="Address" />
-                            <input type="text" placeholder="Address 2" />
-                            <Button size={"l"} black block>
-                                Continue to payment
-                            </Button>
+                            <form method="post" action="/api/checkout">
+                                <Input
+                                    type="text"
+                                    placeholder="Name"
+                                    value={name}
+                                    name="name"
+                                    onChange={
+                                        ev => setName(ev.target.value)} />
+                                <Input
+                                    type="text"
+                                    placeholder="Email"
+                                    value={email}
+                                    name="email"
+                                    onChange={
+                                        ev => setEmail(ev.target.value)} />
+                                <CityHolder>
+                                    <Input
+                                        type="text"
+                                        placeholder="City"
+                                        value={city}
+                                        name="city"
+                                        onChange={
+                                            ev => setCity(ev.target.value)} />
+                                    <Input
+                                        type="text"
+                                        placeholder="Postal Code"
+                                        value={pincode}
+                                        name="pincode"
+                                        onChange={
+                                            ev => setPincode(ev.target.value)} />
+                                </CityHolder>
+                                <Input
+                                    type="text"
+                                    placeholder="Street Address"
+                                    value={streetAddress}
+                                    onChange={
+                                        ev => setStreetAddress(ev.target.value)} />
+                                <Input
+                                    type="text"
+                                    placeholder="State"
+                                    value={state}
+                                    name="state"
+                                    onChange={
+                                        ev => setState(ev.target.value)} />
+                                <Button
+                                    size={"l"}
+                                    black block
+                                    type="submit"
+                                >
+                                    Continue to payment
+                                </Button>
+                            </form>
                         </Box>
                     )}
                 </ColumnsWrapper>
