@@ -1,9 +1,16 @@
-const { createContext, Children, useState } = require("react");
+const { createContext, Children, useState, useEffect } = require("react");
 
 export const CartContext = createContext({});
 
 export function CartContextProvider(props) {
-    const [cartProducts, setCartProducts] = useState([]);
+    const [cartProducts, setCartProducts] = useState(
+        JSON.parse(localStorage.getItem('cart')) || []
+    );
+    useEffect(() => {
+        if(cartProducts?.length >0) {
+            localStorage.setItem('cart', JSON.stringify(cartProducts))
+        }
+    }, [cartProducts])
     function addProduct(productId) {
         setCartProducts(prev => [...prev, productId])
     }
@@ -12,4 +19,4 @@ export function CartContextProvider(props) {
             {props.children}
         </CartContext.Provider>
     );
-}
+} 
