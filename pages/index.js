@@ -10,7 +10,7 @@ export default function Homepage({ featuredProduct, newProducts }) {
     <div>
       <Header />
       <Featured product={featuredProduct} />
-      <NewProducts />
+      <NewProducts newProducts={newProducts} />
     </div>
   )
 };
