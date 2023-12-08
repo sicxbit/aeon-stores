@@ -32,7 +32,7 @@ const StyledNav = styled.nav`
 export default function Header() {
     const {cartProducts} = useContext(CartContext);
     return (
-        <StyledHeader>
+        <StyledHeader >
             <Center>
                 <Wrapper>
                     <Logo href={'/'}>Aeon stores</Logo>

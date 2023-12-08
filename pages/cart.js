@@ -50,9 +50,8 @@ const CityHolder = styled.div`
     display: flex;
     gap: 5px;
 `
-
 export default function CartPage() {
-    const { cartProducts, addProduct, removeProduct } = useContext(CartContext);
+    const { cartProducts, addProduct, removeProduct, clearCart } = useContext(CartContext);
     const [products, setProducts] = useState([])
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
@@ -60,6 +59,8 @@ export default function CartPage() {
     const [pincode, setPincode] = useState('')
     const [streetAddress, setStreetAddress] = useState('')
     const [state, setState] = useState('')
+    const [isSuccess, setIsSuccess] = useState(false)
+
     useEffect(() => {
         const fetchProducts = async () => {
             if (cartProducts.length > 0) {
@@ -75,9 +76,18 @@ export default function CartPage() {
         fetchProducts();
     }, [cartProducts]);
 
+    useEffect(() => {
+        if (typeof window !== 'undefined' && window.location.href.includes('success')) {
+            clearCart();
+            setIsSuccess(true);
+        }
+    }, [clearCart]);
+
+
     function moreOfThisProduct(id) {
         addProduct(id)
     }
+
     function lessOfThisProduct(id) {
         removeProduct(id)
     }
@@ -88,21 +98,6 @@ export default function CartPage() {
         total += price
     }
 
-    if (typeof window !== 'undefined' && window.location.href.includes('success')) {
-        return (
-            <>
-                <Header />
-                <Center>
-                    <Box>
-                        <h1>Thank you for your order!</h1>
-                        <p>We will send you the tracking details ASAP</p>
-                    </Box>
-                </Center>
-            </>
-        );
-    }
-    
-
     async function goToPayment() {
         const response = await axios.post('/api/checkout', {
             name, email, city, pincode, streetAddress, state,
@@ -112,61 +107,68 @@ export default function CartPage() {
             window.location = response.data.url
         }
     }
+
     return (
         <>
             <Header />
             <Center>
                 <ColumnsWrapper>
-                    <Box>
-                        <h2>Cart</h2>
-                        {cartProducts.length === 0 ? (
-                            <div>Your cart is empty</div>
-                        ) : (
-                            <Table>
-                                <thead>
-                                    <tr>
-                                        <th>Product</th>
-                                        <th>Quantity</th>
-                                        <th>Price</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {products.map(product => (
-                                        <tr key={product._id}>
-                                            <ProductInfoCell>
-                                                <ProductImageBox>
-                                                    <img src={product.images[0]} />
-                                                </ProductImageBox>
-                                                {product.title}
-                                            </ProductInfoCell>
-                                            <td>
-                                                <Button onClick={() => lessOfThisProduct(product._id)}>
-                                                    -
-                                                </Button>
-                                                <QuantityLabel>
-                                                    {cartProducts.filter(id => id === product._id).length}
-                                                </QuantityLabel>
-                                                <Button onClick={() => moreOfThisProduct(product._id)}>
-                                                    +
-                                                </Button>
-                                            </td>
-                                            <td>
-                                                {cartProducts.filter(id => id === product._id).length
-                                                    * product.price}
-                                            </td>
+                    {isSuccess ? (
+                        <Box>
+                            <h1>Thank you for your order!</h1>
+                            <p>We will send you the tracking details ASAP</p>
+                        </Box>
+                    ) : (
+                        <Box>
+                            <h2>Cart</h2>
+                            {cartProducts.length === 0 ? (
+                                <div>Your cart is empty</div>
+                            ) : (
+                                <Table>
+                                    <thead>
+                                        <tr>
+                                            <th>Product</th>
+                                            <th>Quantity</th>
+                                            <th>Price</th>
                                         </tr>
-                                    ))}
-                                    <tr>
-                                        <td>
-                                        </td>
-                                        <td></td>
-                                        <td>₹{total}</td>
-                                    </tr>
-
-                                </tbody>
-                            </Table>
-                        )}
-                    </Box>
+                                    </thead>
+                                    <tbody>
+                                        {products.map(product => (
+                                            <tr key={product._id}>
+                                                <ProductInfoCell>
+                                                    <ProductImageBox>
+                                                        <img src={product.images[0]} />
+                                                    </ProductImageBox>
+                                                    {product.title}
+                                                </ProductInfoCell>
+                                                <td>
+                                                    <Button onClick={() => lessOfThisProduct(product._id)}>
+                                                        -
+                                                    </Button>
+                                                    <QuantityLabel>
+                                                        {cartProducts.filter(id => id === product._id).length}
+                                                    </QuantityLabel>
+                                                    <Button onClick={() => moreOfThisProduct(product._id)}>
+                                                        +
+                                                    </Button>
+                                                </td>
+                                                <td>
+                                                    {cartProducts.filter(id => id === product._id).length
+                                                        * product.price}
+                                                </td>
+                                            </tr>
+                                        ))}
+                                        <tr>
+                                            <td>
+                                            </td>
+                                            <td></td>
+                                            <td>₹{total}</td>
+                                        </tr>
+                                    </tbody>
+                                </Table>
+                            )}
+                        </Box>
+                    )}
                     {cartProducts.length > 0 && (
                         <Box>
                             <h2>Order information</h2>
@@ -175,44 +177,38 @@ export default function CartPage() {
                                 placeholder="Name"
                                 value={name}
                                 name="name"
-                                onChange={
-                                    ev => setName(ev.target.value)} />
+                                onChange={ev => setName(ev.target.value)} />
                             <Input
                                 type="text"
                                 placeholder="Email"
                                 value={email}
                                 name="email"
-                                onChange={
-                                    ev => setEmail(ev.target.value)} />
+                                onChange={ev => setEmail(ev.target.value)} />
                             <CityHolder>
                                 <Input
                                     type="text"
                                     placeholder="City"
                                     value={city}
                                     name="city"
-                                    onChange={
-                                        ev => setCity(ev.target.value)} />
+                                    onChange={ev => setCity(ev.target.value)} />
                                 <Input
                                     type="text"
                                     placeholder="Postal Code"
                                     value={pincode}
                                     name="pincode"
-                                    onChange={
-                                        ev => setPincode(ev.target.value)} />
+                                    onChange={ev => setPincode(ev.target.value)} />
                             </CityHolder>
                             <Input
                                 type="text"
                                 placeholder="Street Address"
                                 value={streetAddress}
-                                onChange={
-                                    ev => setStreetAddress(ev.target.value)} />
+                                onChange={ev => setStreetAddress(ev.target.value)} />
                             <Input
                                 type="text"
                                 placeholder="State"
                                 value={state}
                                 name="state"
-                                onChange={
-                                    ev => setState(ev.target.value)} />
+                                onChange={ev => setState(ev.target.value)} />
 
                             <Button
                                 size={"l"}

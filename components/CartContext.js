@@ -10,6 +10,7 @@ export function CartContextProvider(props) {
     useEffect(() => {
         if (cartProducts?.length > 0) {
             ls?.setItem('cart', JSON.stringify(cartProducts));
+            console.log('Cart items in local storage:', JSON.stringify(cartProducts));
         }
     }, [cartProducts]);
 
@@ -18,23 +19,30 @@ export function CartContextProvider(props) {
             setCartProducts(JSON.parse(ls.getItem('cart')));
         }
     }, [ls]);
-    
 
     function addProduct(productId) {
         setCartProducts(prev => [...prev, productId]);
+    }
+
+    function clearCart() {
+        setCartProducts([]);
+        ls?.setItem('cart', '[]'); // Clear local storage immediately
     }
 
     function removeProduct(productId) {
         setCartProducts(prev => {
             const pos = prev.indexOf(productId);
             if (pos !== -1) {
-                return prev.filter((value,index) => index !== pos);
-            } return prev;
+                return prev.filter((value, index) => index !== pos);
+            }
+            return prev;
         });
     }
 
     return (
-        <CartContext.Provider value={{ cartProducts, setCartProducts, addProduct, removeProduct }}>
+        <CartContext.Provider value={{
+            cartProducts, setCartProducts, addProduct, removeProduct, clearCart
+        }}>
             {props.children}
         </CartContext.Provider>
     );
