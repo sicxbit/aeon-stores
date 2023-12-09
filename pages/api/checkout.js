@@ -30,18 +30,18 @@ export default async function handler(req, res) {
                 quantity,
                 price_data: {
                     currency: 'INR',
-                    product_data :  {name: productInfo.title},
+                    product_data: { name: productInfo.title },
                     unit_amount: productInfo.price * 100
                 }
             });
         }
     }
-    
+
 
 
     const orderDoc = await Order.create({
-        line_items,name,email,city,pincode,
-        streetAddress,state,paid:false,
+        line_items, name, email, city, pincode,
+        streetAddress, state, paid: false,
     });
 
 
@@ -49,11 +49,11 @@ export default async function handler(req, res) {
         line_items,
         mode: 'payment',
         customer_email: email,
-        success_url :process.env.PUBLIC_URL + '/cart?success=1',
+        success_url: process.env.PUBLIC_URL + '/cart?success=1',
         cancel_url: process.env.PUBLIC_URL + '/cart?canceled=1',
-        metadata: {orderID : orderDoc._id.toString()}
+        metadata: { orderID: orderDoc._id.toString(), test: 'ok' }
     })
     res.json({
-        url:session.url
+        url: session.url
     })
 }
