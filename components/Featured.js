@@ -16,6 +16,9 @@ const Title = styled.h1`
     margin: 0;
     font-weight: normal;
     font-size: 3rem;
+    @media screen and (min-width: 768px) {
+      font-size: 3rem;
+    }
 `;
 
 const Desc = styled.p`
@@ -25,10 +28,21 @@ const Desc = styled.p`
 
 const ColumnsWrapper = styled.div`
     display: grid;
-    grid-template-columns: 0.8fr 1fr;
+    grid-template-columns: 1fr;
     gap: 40px;
     img {
         max-width: 100%;
+        max-height: 200px;
+        margin: 0 auto;
+    }
+    div:nth-child(1){
+      order: 2;
+    }
+    @media screen and (min-width: 768px) {
+      grid-template-columns: 0.8fr 1fr;
+      div:nth-child(1){
+      order: 0;
+    }
     }
 `;
 
