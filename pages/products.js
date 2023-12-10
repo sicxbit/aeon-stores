@@ -3,11 +3,8 @@ import Header from "@/components/Header"
 import { mongooseConnect } from "./lib/mongoose";
 import { Product } from "@/models/Product";
 import ProductGrid from "@/components/ProductsGrid";
-import styled from "styled-components";
+import Title from "@/components/Title";
 
-const Title = styled.h1`
-    font-size: 1.5rem;
-`;
 
 export default function ProductsPage({products}) {
     return (
