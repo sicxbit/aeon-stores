@@ -32,7 +32,7 @@ const ColumnsWrapper = styled.div`
     gap: 40px;
     img {
         max-width: 100%;
-        max-height: 200px;
+        max-height: 300px;
         margin: 0 auto;
     }
     div:nth-child(1){
@@ -40,6 +40,10 @@ const ColumnsWrapper = styled.div`
     }
     @media screen and (min-width: 768px) {
       grid-template-columns: 0.8fr 1fr;
+      img {
+        max-width: 100%;
+        max-height: 500px;
+      }
       div:nth-child(1){
       order: 0;
     }
@@ -72,7 +76,7 @@ export default function Featured({ product }) {
                 <Title>{product.title}</Title>
                 <Desc>{product.description}</Desc>
                 <ButtonsWrapper>
-                  <ButtonLink href={"/products/" + product._id} white={1} outline={1}>
+                  <ButtonLink href={"/product/" + product._id} white={1} outline={1}>
                     Read more
                   </ButtonLink>
                   <Button white onClick={addFeaturedToCart}>
