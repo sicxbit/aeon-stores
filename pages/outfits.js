@@ -4,15 +4,17 @@ import { mongooseConnect } from "./lib/mongoose";
 import { Product } from "@/models/Product";
 import ProductGrid from "@/components/ProductsGrid";
 import Title from "@/components/Title";
+import OutfitGrid from "@/components/OutfitGrid";
 
 
 export default function ProductsPage({products}) {
+    console.log(products)
     return (
         <>
             <Header />
             <Center>
-                <Title>All products</Title>
-                <ProductGrid products={products} />
+                <Title>Outfits</Title>
+                <OutfitGrid products={products} />
             </Center>
         </>
     )
