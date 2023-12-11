@@ -10,7 +10,6 @@ export function CartContextProvider(props) {
     useEffect(() => {
         if (cartProducts?.length > 0) {
             ls?.setItem('cart', JSON.stringify(cartProducts));
-            console.log('Cart items in local storage:', JSON.stringify(cartProducts));
         }
     }, [cartProducts]);
 

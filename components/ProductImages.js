@@ -10,7 +10,7 @@ const ImageContainer = styled.div`
 
 const MainImage = styled.img`
     max-width: 100%;
-    max-height: 350px;
+    max-height: 500px;
 `;
 
 const MainImageWrapper = styled.div`
