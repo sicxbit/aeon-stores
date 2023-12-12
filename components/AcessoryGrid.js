@@ -12,7 +12,7 @@ const StyledGrid = styled.div`
   }
 `;
 
-export default function OutfitGrid({ products }) {
+export default function AcessoryGrid({ products }) {
   const [targetCategoryIds, setTargetCategoryIds] = useState([]);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ export default function OutfitGrid({ products }) {
         const updatedTargetCategoryIds = categories
           .filter((category) => {
             const name = category.parent?.name || category.name; 
-            return name === 'Clothes';
+            return name === "Acessories";
           })
           .map((category) => category._id.toString()); 
 

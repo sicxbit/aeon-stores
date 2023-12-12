@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import OutfitBox from "./OutfitBox"
+import ProductBox from "./ProductBox"
 
 const StyledProductGrid = styled.div`
     display: grid;
@@ -14,7 +14,7 @@ export default function ProductGrid({products}) {
     return(
         <StyledProductGrid>
             {products ? products.map(product => (
-                    <OutfitBox key={product._id} {...product} />
+                    <ProductBox key={product._id} {...product} />
                 )) : null}
         </StyledProductGrid>
     )
