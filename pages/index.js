@@ -20,10 +20,10 @@ export default function Homepage({
 
 export async function getServerSideProps() {
   await mongooseConnect();
+  const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL
   const featuredProductId = async () => {
     try {
-      const response = await axios.get('/api/featured')
-    
+      const response = await axios.get(`${apiBaseUrl}/featured`)
     if (response.data && response.data.featuredProduct) {
       return response.data.featuredProduct;}
     } catch (error) {
