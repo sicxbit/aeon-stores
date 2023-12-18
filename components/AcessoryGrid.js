@@ -13,7 +13,6 @@ const StyledGrid = styled.div`
 `;
 
 export default function AcessoryGrid({ products }) {
-  console.log(products)
   const [targetCategoryIds, setTargetCategoryIds] = useState([]);
 
   useEffect(() => {
