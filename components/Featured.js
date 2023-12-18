@@ -93,12 +93,12 @@ export default function Featured({ product }) {
               </div>
             ) : (
               <p>Loading...</p>
-              // Or any other fallback UI for when the product is not available
+             
             )}
           </Column>
           <Column>
             {product && (
-              <img src="https://storage.googleapis.com/aeon-product-images/1701725135053-.jpg" alt="" />
+              <img src={product.images[1]} alt="" />
             )}
           </Column>
         </ColumnsWrapper>
