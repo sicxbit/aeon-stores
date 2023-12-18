@@ -84,7 +84,7 @@ export default function Header() {
             <NavLink href={"/outfits"}>Outfits</NavLink>
             <NavLink href={"/acessories"}>Acessories</NavLink>
             <NavLink href={"/categories"}>Categories</NavLink>
-            <NavLink href={"/account"}>Account</NavLink>
+            {/* <NavLink href={"/account"}>Account</NavLink> */}
             <NavLink href={"/cart"}>Cart ({cartProducts.length})</NavLink>
           </StyledNav>
           <NavButton onClick={toggleNav}>

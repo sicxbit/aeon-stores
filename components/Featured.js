@@ -62,16 +62,22 @@ const ButtonsWrapper = styled.div`
 `;
 
 
+
 export default function Featured({ product }) {
-  const {addProduct}  = useContext(CartContext);
+  const { addProduct } = useContext(CartContext);
+
   function addFeaturedToCart() {
-    addProduct(product._id);
+    if (product) {
+      addProduct(product._id);
+    }
   }
-    return (
-      <Bg>
-        <Center>
-          <ColumnsWrapper>
-            <Column>
+
+  return (
+    <Bg>
+      <Center>
+        <ColumnsWrapper>
+          <Column>
+            {product ? (
               <div>
                 <Title>{product.title}</Title>
                 <Desc>{product.description}</Desc>
@@ -85,12 +91,18 @@ export default function Featured({ product }) {
                   </Button>
                 </ButtonsWrapper>
               </div>
-            </Column>
-            <Column>
+            ) : (
+              <p>Loading...</p>
+              // Or any other fallback UI for when the product is not available
+            )}
+          </Column>
+          <Column>
+            {product && (
               <img src="https://storage.googleapis.com/aeon-product-images/1701725135053-.jpg" alt="" />
-            </Column>
-          </ColumnsWrapper>
-        </Center>
-      </Bg>
-    );
-  }
+            )}
+          </Column>
+        </ColumnsWrapper>
+      </Center>
+    </Bg>
+  );
+}

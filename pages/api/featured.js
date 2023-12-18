@@ -1,12 +1,11 @@
-import mongoose from "mongoose";
 import { mongooseConnect } from "../lib/mongoose";
+import mongoose from "mongoose";
 
 export default async function handler(req, res) {
     try {
         await mongooseConnect();
 
         if (req.method === "GET") {
-            // Fetch the featured product
             const featuredProduct = await mongoose.connection.collection('featuredproducts').findOne();
 
             if (!featuredProduct) {
