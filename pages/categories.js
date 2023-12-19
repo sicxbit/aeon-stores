@@ -6,7 +6,6 @@ import CategoryGrid from "@/components/CategoryGrid";
 import axios from 'axios';
 
 export default function AcessoriesPage({ categories }) {
-    console.log(categories)
   return (
     <>
       <Header />
@@ -21,13 +20,13 @@ export default function AcessoriesPage({ categories }) {
 
 export async function getStaticProps() {
     await mongooseConnect();
+
+    const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL
   
     try {
-      const response = await axios.get('/api/categories/');
+      const response = await axios.get(`${apiBaseUrl}/categories`);
       const categories = response.data;
-  
-      console.log('Fetched categories:', categories);
-  
+
       return {
         props: {
           categories: JSON.parse(JSON.stringify(categories)),

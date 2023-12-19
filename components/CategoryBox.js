@@ -2,22 +2,10 @@ import styled from "styled-components";
 import Link from "next/link";
 
 const CategoryWrapper = styled.div`
-  /* Add any styling you need for the category box */
+  // Your styles for CategoryWrapper
 `;
 
-const CategoryBox = ({ _id, name }) => {
-  const url = '/category/' + _id;
-
-  return (
-    <CategoryWrapper>
-      <WhiteBox href={url}>
-        <div>{name}</div>
-      </WhiteBox>
-    </CategoryWrapper>
-  );
-};
-
-const WhiteBox = styled(Link)`
+const WhiteBox = styled.div`
   background-color: #fff;
   padding: 20px;
   height: 120px;
@@ -26,6 +14,25 @@ const WhiteBox = styled(Link)`
   align-items: center;
   border-radius: 10px;
   justify-content: center;
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
 `;
+
+const CategoryBox = ({ _id, name }) => {
+  const url = '/category/' + _id;
+
+  return (
+    <CategoryWrapper>
+      <WhiteBox>
+        <Link href={url}>
+          <span>{name}</span>
+        </Link>
+      </WhiteBox>
+    </CategoryWrapper>
+  );
+};
 
 export default CategoryBox;
