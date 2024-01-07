@@ -98,7 +98,7 @@ export default function Featured({ product }) {
           </Column>
           <Column>
             {product && (
-              <img src={product.images[1]} alt="" />
+              <img src={product.images[0] } alt="" />
             )}
           </Column>
         </ColumnsWrapper>
